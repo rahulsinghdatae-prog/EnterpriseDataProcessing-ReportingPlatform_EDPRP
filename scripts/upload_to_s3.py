@@ -7,7 +7,8 @@ import shutil
 # Configuration
 # ============================================================
 
-BUCKET_NAME = "amz-s3-data-snow"
+#BUCKET_NAME = "amz-s3-data-snow"
+BUCKET_NAME = "amz-s3-data-snow-ap-singapore"
 
 SOURCE_FOLDER = r"C:\Users\user\Desktop\DE\Projects\EnterpriseDataProcessing&ReportingPlatform_EDPRP\data\raw\customers"
 
