@@ -19,155 +19,160 @@ REJECTED_FOLDER = r"C:\Users\user\Desktop\DE\Projects\EnterpriseDataProcessing&R
 S3_FOLDER = "raw/customers/"
 
 
-# ============================================================
-# Create S3 Client
-# ============================================================
+def upload_file_to_s3():
+    # ============================================================
+    # Create S3 Client
+    # ============================================================
 
-s3 = boto3.client("s3")
-
-
-# ============================================================
-# Create Archive Folders If They Don't Exist
-# ============================================================
-
-os.makedirs(PROCESSED_FOLDER, exist_ok=True)
-os.makedirs(REJECTED_FOLDER, exist_ok=True)
+    s3 = boto3.client("s3")
 
 
-# ============================================================
-# Check Source Folder
-# ============================================================
+    # ============================================================
+    # Create Archive Folders If They Don't Exist
+    # ============================================================
 
-if not os.path.exists(SOURCE_FOLDER):
-
-    print(f"Source folder not found: {SOURCE_FOLDER}")
-    exit()
+    os.makedirs(PROCESSED_FOLDER, exist_ok=True)
+    os.makedirs(REJECTED_FOLDER, exist_ok=True)
 
 
-# ============================================================
-# Get All Files From Source Folder
-# ============================================================
+    # ============================================================
+    # Check Source Folder
+    # ============================================================
 
-files = os.listdir(SOURCE_FOLDER)
+    if not os.path.exists(SOURCE_FOLDER):
 
-
-# ============================================================
-# Process Files
-# ============================================================
-
-for file_name in files:
-
-    # --------------------------------------------------------
-    # Only process files starting with customer_
-    # --------------------------------------------------------
-
-    if not file_name.startswith("customer_"):
-
-        print(f"Skipped: {file_name}")
-        continue
+        print(f"Source folder not found: {SOURCE_FOLDER}")
+        exit()
 
 
-    # --------------------------------------------------------
-    # Create complete local file path
-    # --------------------------------------------------------
+    # ============================================================
+    # Get All Files From Source Folder
+    # ============================================================
 
-    local_file = os.path.join(
-        SOURCE_FOLDER,
-        file_name
-    )
+    files = os.listdir(SOURCE_FOLDER)
 
 
-    # --------------------------------------------------------
-    # Make sure it is actually a file
-    # --------------------------------------------------------
+    # ============================================================
+    # Process Files
+    # ============================================================
 
-    if not os.path.isfile(local_file):
+    for file_name in files:
 
-        print(f"Skipped (not a file): {file_name}")
-        continue
+        # --------------------------------------------------------
+        # Only process files starting with customer_
+        # --------------------------------------------------------
 
+        if not file_name.startswith("customer_"):
 
-    # --------------------------------------------------------
-    # S3 Key
-    # --------------------------------------------------------
-
-    s3_key = S3_FOLDER + file_name
-
-
-    print("\n---------------------------------------------")
-    print(f"Processing file: {file_name}")
-    print(f"S3 Location: s3://{BUCKET_NAME}/{s3_key}")
+            print(f"Skipped: {file_name}")
+            continue
 
 
-    # ========================================================
-    # Upload File To S3
-    # ========================================================
+        # --------------------------------------------------------
+        # Create complete local file path
+        # --------------------------------------------------------
 
-    try:
-
-        s3.upload_file(
-            local_file,
-            BUCKET_NAME,
-            s3_key
-        )
-
-        print("S3 upload successful!")
-
-
-        # ====================================================
-        # Move File To Processed Folder
-        # ====================================================
-
-        processed_file = os.path.join(
-            PROCESSED_FOLDER,
+        local_file = os.path.join(
+            SOURCE_FOLDER,
             file_name
         )
 
-        shutil.move(
-            local_file,
-            processed_file
-        )
 
-        print("File moved to processed folder.")
-        print(f"Processed: {processed_file}")
+        # --------------------------------------------------------
+        # Make sure it is actually a file
+        # --------------------------------------------------------
 
+        if not os.path.isfile(local_file):
 
-    except Exception as e:
-
-        print("S3 upload failed!")
-        print(f"Error: {e}")
+            print(f"Skipped (not a file): {file_name}")
+            continue
 
 
-        # ====================================================
-        # Move File To Rejected Folder
-        # ====================================================
+        # --------------------------------------------------------
+        # S3 Key
+        # --------------------------------------------------------
+
+        s3_key = S3_FOLDER + file_name
+
+
+        print("\n---------------------------------------------")
+        print(f"Processing file: {file_name}")
+        print(f"S3 Location: s3://{BUCKET_NAME}/{s3_key}")
+
+
+        # ========================================================
+        # Upload File To S3
+        # ========================================================
 
         try:
 
-            rejected_file = os.path.join(
-                REJECTED_FOLDER,
+            s3.upload_file(
+                local_file,
+                BUCKET_NAME,
+                s3_key
+            )
+
+            print("S3 upload successful!")
+
+
+            # ====================================================
+            # Move File To Processed Folder
+            # ====================================================
+
+            processed_file = os.path.join(
+                PROCESSED_FOLDER,
                 file_name
             )
 
             shutil.move(
                 local_file,
-                rejected_file
+                processed_file
             )
 
-            print("File moved to rejected folder.")
-            print(f"Rejected: {rejected_file}")
+            print("File moved to processed folder.")
+            print(f"Processed: {processed_file}")
 
 
-        except Exception as move_error:
+        except Exception as e:
 
-            print("Could not move file to rejected folder.")
-            print(f"Move Error: {move_error}")
+            print("S3 upload failed!")
+            print(f"Error: {e}")
 
 
-# ============================================================
-# Process Completed
-# ============================================================
+            # ====================================================
+            # Move File To Rejected Folder
+            # ====================================================
 
-print("\n=============================================")
-print("Customer file processing completed.")
-print("=============================================")
+            try:
+
+                rejected_file = os.path.join(
+                    REJECTED_FOLDER,
+                    file_name
+                )
+
+                shutil.move(
+                    local_file,
+                    rejected_file
+                )
+
+                print("File moved to rejected folder.")
+                print(f"Rejected: {rejected_file}")
+
+
+            except Exception as move_error:
+
+                print("Could not move file to rejected folder.")
+                print(f"Move Error: {move_error}")
+
+
+    # ============================================================
+    # Process Completed
+    # ============================================================
+
+    print("\n=============================================")
+    print("Customer file processing completed.")
+    print("=============================================")
+
+
+if __name__ == "__main__":
+    upload_file_to_s3()
