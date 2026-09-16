@@ -29,26 +29,24 @@ CREATE OR REPLACE STORAGE INTEGRATION S3_ECOMMERCE_INTEGRATION
 TYPE = EXTERNAL_STAGE
 STORAGE_PROVIDER = 'S3'
 ENABLED = TRUE
-STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::470451076022:role/amz-EDPRP-Snowflake-S3-Role-Singapore'
+STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::470451076022:role/amz-EDPRP-Snowflake-S3-Role-Thailand'
 STORAGE_ALLOWED_LOCATIONS = (
-    's3://amz-s3-data-snow-ap-singapore/raw/customers/'
+    's3://amz-s3-data-snow-ap-thailand/raw/customers/'
 );
 
 DESC STORAGE INTEGRATION S3_ECOMMERCE_INTEGRATION;
 /* 
 STORAGE_AWS_IAM_USER_ARN ='arn:aws:iam::192929863221:user/ebt62000-s';
-STORAGE_AWS_ROLE_ARN='arn:aws:iam::470451076022:role/amz-EDPRP-Snowflake-S3-Role-Singapore'
-STORAGE_AWS_EXTERNAL_ID = 'AO72901_SFCRole=4_i9vxDABc11C0AbLFHPAmYDvyQCk=';
+STORAGE_AWS_ROLE_ARN='arn:aws:iam::470451076022:role/amz-EDPRP-Snowflake-S3-Role-Thailand';
+STORAGE_AWS_EXTERNAL_ID = 'AO72901_SFCRole=4_+cgqSEDoRvi1NH/yjK1Tmzc8nak=';
 */
 
 CREATE OR REPLACE STAGE ECOMMERCE_DB.BRONZE.S3_CUSTOMERS_STAGE
-URL = 's3://amz-s3-data-snow-ap-singapore/raw/customers/'
+URL = 's3://amz-s3-data-snow-ap-thailand/raw/customers/'
 STORAGE_INTEGRATION = S3_ECOMMERCE_INTEGRATION
 FILE_FORMAT = ECOMMERCE_DB.BRONZE.CSV_FORMAT;
 
 
 LIST @ECOMMERCE_DB.BRONZE.S3_CUSTOMERS_STAGE;
 
-select CURRENT_REGION();
-
-select $1 from @ECOMMERCE_DB.BRONZE.S3_CUSTOMERS_STAGE;
+select $1, $2, $3, $4, $5, $6, $7, $8, $9, $10 from @ECOMMERCE_DB.BRONZE.S3_CUSTOMERS_STAGE;
