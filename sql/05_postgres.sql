@@ -1,0 +1,26 @@
+-- ============================================================
+-- 05. PostgreSQL Export Schema
+-- ============================================================
+-- Purpose:
+--   This script defines the schema on the target PostgreSQL
+--   database that receives the final (GOLD) data exported from
+--   Snowflake. It is expected to be run against PostgreSQL,
+--   not Snowflake.
+--
+-- Suggested objects:
+--   CREATE TABLE IF NOT EXISTS customers (
+--       customer_id    BIGINT PRIMARY KEY,
+--       first_name     VARCHAR(100),
+--       last_name      VARCHAR(100),
+--       email          VARCHAR(200),
+--       city           VARCHAR(100),
+--       state          VARCHAR(100),
+--       country        VARCHAR(100),
+--       loaded_at      TIMESTAMP DEFAULT NOW()
+--   );
+--
+-- Pipeline reference:
+--   Snowflake GOLD -> scripts/postgres_load.py -> PostgreSQL
+--
+-- NOTE: Currently empty - implementation pending.
+-- ============================================================

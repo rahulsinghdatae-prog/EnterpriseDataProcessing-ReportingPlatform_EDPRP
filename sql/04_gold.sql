@@ -1,0 +1,22 @@
+-- ============================================================
+-- 04. Gold Layer - ECOMMERCE_DB.GOLD
+-- ============================================================
+-- Purpose:
+--   The GOLD layer contains business-ready, aggregated and
+--   denormalized tables (facts, dimensions, wide tables) that
+--   are consumed directly by dashboards, reports and by the
+--   PostgreSQL export step (see scripts/postgres_load.py).
+--
+-- Typical objects created here:
+--   - Dimension tables (DIM_CUSTOMER, DIM_PRODUCT, ...)
+--   - Fact tables (FACT_ORDERS, FACT_SALES, ...)
+--   - Aggregated views / summary tables for KPIs
+--
+-- Suggested pattern:
+--   CREATE OR REPLACE TABLE ECOMMERCE_DB.GOLD.V_CUSTOMER_SUMMARY AS
+--   SELECT ... FROM ECOMMERCE_DB.SILVER.DIM_CUSTOMER;
+--
+-- Run order: 01 -> 02 (bronze) -> 03 (silver) -> 04 (gold)
+--
+-- NOTE: Currently empty - implementation pending.
+-- ============================================================

@@ -2,6 +2,11 @@ import boto3
 import os
 import shutil
 
+try:
+    from scripts.logging_config import setup_logging, get_logger
+except ImportError:
+    from logging_config import setup_logging, get_logger
+
 
 # ============================================================
 # Configuration
@@ -18,6 +23,8 @@ PROCESSED_FOLDER = r"C:\Users\user\Desktop\DE\Projects\EnterpriseDataProcessing&
 REJECTED_FOLDER = r"C:\Users\user\Desktop\DE\Projects\EnterpriseDataProcessing&ReportingPlatform_EDPRP\data\rejected\customers"
 
 S3_FOLDER = "raw/customers/"
+
+logger = get_logger()
 
 
 def upload_file_to_s3():
@@ -42,7 +49,7 @@ def upload_file_to_s3():
 
     if not os.path.exists(SOURCE_FOLDER):
 
-        print(f"Source folder not found: {SOURCE_FOLDER}")
+        logger.error("Source folder not found: %s", SOURCE_FOLDER)
         exit()
 
 
@@ -65,7 +72,7 @@ def upload_file_to_s3():
 
         if not file_name.startswith("customer_"):
 
-            print(f"Skipped: {file_name}")
+            logger.info("Skipped: %s", file_name)
             continue
 
 
@@ -85,7 +92,7 @@ def upload_file_to_s3():
 
         if not os.path.isfile(local_file):
 
-            print(f"Skipped (not a file): {file_name}")
+            logger.info("Skipped (not a file): %s", file_name)
             continue
 
 
@@ -97,8 +104,8 @@ def upload_file_to_s3():
 
 
         print("\n---------------------------------------------")
-        print(f"Processing file: {file_name}")
-        print(f"S3 Location: s3://{BUCKET_NAME}/{s3_key}")
+        logger.info("Processing file: %s", file_name)
+        logger.info("S3 Location: s3://%s/%s", BUCKET_NAME, s3_key)
 
 
         # ========================================================
@@ -113,7 +120,7 @@ def upload_file_to_s3():
                 s3_key
             )
 
-            print("S3 upload successful!")
+            logger.info("S3 upload successful!")
 
 
             # ====================================================
@@ -130,14 +137,14 @@ def upload_file_to_s3():
                 processed_file
             )
 
-            print("File moved to processed folder.")
-            print(f"Processed: {processed_file}")
+            logger.info("File moved to processed folder.")
+            logger.info("Processed: %s", processed_file)
 
 
         except Exception as e:
 
-            print("S3 upload failed!")
-            print(f"Error: {e}")
+            logger.error("S3 upload failed!")
+            logger.error("Error: %s", e)
 
 
             # ====================================================
@@ -156,14 +163,14 @@ def upload_file_to_s3():
                     rejected_file
                 )
 
-                print("File moved to rejected folder.")
-                print(f"Rejected: {rejected_file}")
+                logger.info("File moved to rejected folder.")
+                logger.info("Rejected: %s", rejected_file)
 
 
             except Exception as move_error:
 
-                print("Could not move file to rejected folder.")
-                print(f"Move Error: {move_error}")
+                logger.error("Could not move file to rejected folder.")
+                logger.error("Move Error: %s", move_error)
 
 
     # ============================================================
@@ -171,9 +178,10 @@ def upload_file_to_s3():
     # ============================================================
 
     print("\n=============================================")
-    print("Customer file processing completed.")
+    logger.info("Customer file processing completed.")
     print("=============================================")
 
 
 if __name__ == "__main__":
+    setup_logging()
     upload_file_to_s3()

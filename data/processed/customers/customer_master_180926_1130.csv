@@ -1,0 +1,7 @@
+CUSTOMER_ID,FIRST_NAME,LAST_NAME,EMAIL,CITY,STATE,COUNTRY,SOURCE_FILE_NAME,LOAD_TIMESTAMP,BATCH_ID
+1001,Rahul-1,Singh-1,rahul.singh1@gmail.com,Ghaziabad,Uttar Pradesh,India,customer_master_180926_1130.csv,18-09-2026 11:30,BATCH_20260918_001
+1002,Rahul-2,Singh-2,rahul.singh2@gmail.com,Ghaziabad,Uttar Pradesh,India,customer_master_180926_1130.csv,18-09-2026 11:30,BATCH_20260918_001
+1003,Rahul-3,Singh-3,rahul.singh3@gmail.com,Ghaziabad,Uttar Pradesh,India,customer_master_180926_1130.csv,18-09-2026 11:30,BATCH_20260918_001
+1004,Rahul-4,Singh-4,rahul.singh4@gmail.com,Ghaziabad,Uttar Pradesh,India,customer_master_180926_1130.csv,18-09-2026 11:30,BATCH_20260918_001
+1005,Rahul-5,Singh-5,rahul.singh5@gmail.com,Ghaziabad,Uttar Pradesh,India,customer_master_180926_1130.csv,18-09-2026 11:30,BATCH_20260918_001
+1006,Rahul-6,Singh-6,rahul.singh6@gmail.com,Ghaziabad,Uttar Pradesh,India,customer_master_180926_1130.csv,18-09-2026 11:30,BATCH_20260918_001

@@ -1,0 +1,24 @@
+-- ============================================================
+-- 03. Silver Layer - ECOMMERCE_DB.SILVER
+-- ============================================================
+-- Purpose:
+--   The SILVER layer takes the raw BRONZE data and transforms
+--   it into clean, standardized and deduplicated tables that
+--   can be safely consumed by the business layer.
+--
+-- Typical transformations applied here:
+--   - Standardize data types (e.g. dates, numerics)
+--   - Trim / normalize string fields
+--   - Remove duplicate records
+--   - Add surrogate keys (e.g. DIM_CUSTOMER_KEY)
+--   - Rename columns to a consistent naming convention
+--   - Basic validation / quality filters
+--
+-- Suggested objects for this layer:
+--   CREATE TABLE OR REPLACE ECOMMERCE_DB.SILVER.DIM_CUSTOMER AS
+--   SELECT ... FROM ECOMMERCE_DB.BRONZE.CUSTOMERS;
+--
+-- Run order: 01 -> 02 (bronze) -> 03 (silver) -> 04 (gold)
+--
+-- NOTE: Currently empty - implementation pending.
+-- ============================================================

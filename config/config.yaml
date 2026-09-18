@@ -1,0 +1,64 @@
+# ============================================================
+# EDPRP - Central Configuration File
+# ============================================================
+# This file contains all runtime configuration for the EDPRP
+# pipeline. Scripts should read their settings from here so
+# that values are not hard-coded in Python code.
+#
+# SECURITY NOTE:
+#   Do NOT store passwords/secrets in this file. Keep secrets
+#   in the project .env file or in the secret manager and
+#   reference the environment variable names here.
+# ============================================================
+
+
+# ============================================================
+# Snowflake Connection
+# ============================================================
+# Account, user, warehouse, database and schema used to
+# connect and load data into Snowflake.
+snowflake:
+  account: "AO72901.ap-southeast-7.aws"     # Snowflake account (region included)
+  user: "RAHULSINGH"                        # Database user
+  # password: set via env var SNOWFLAKE_PASSWORD
+  warehouse: "COMPUTE_WH"                   # Compute warehouse for queries
+  database: "ECOMMERCE_DB"                  # Target database
+  schema: "BRONZE"                          # Default schema (raw / staging layer)
+
+
+# ============================================================
+# S3 Buckets / Folders
+# ============================================================
+# The pipeline stages the source files in S3 before loading
+# them into Snowflake. After a load attempt every file is
+# moved out of the "raw" folder:
+#   - raw      -> archive   after a successful load
+#   - raw      -> rejected  after a failed load
+s3:
+  bucket: "amz-s3-data-snow-ap-thailand"    # Main S3 bucket for this project
+
+  folders:
+    raw: "raw/customers/"                   # Source files waiting to be loaded
+    archive: "archive/customers/"           # Successfully loaded files
+    rejected: "rejected/customers/"         # Files that failed to load
+
+
+# ============================================================
+# Snowflake Stage / Table
+# ============================================================
+# Names of the Snowflake stage and target table used by the
+# COPY INTO command (see scripts/load_customers_from_s3_to_snowflake.py).
+load:
+  stage: "S3_CUSTOMERS_STAGE"               # Stage pointing to the raw S3 folder
+  table: "CUSTOMERS"                        # Target table (BRONZE.CUSTOMERS)
+
+
+# ============================================================
+# Local File Paths (upload step)
+# ============================================================
+# Local folders used by scripts/upload_to_s3.py to pick files
+# and to archive/reject them locally for traceability.
+local:
+  source: "./data/raw/customers"            # Local folder with files to upload
+  processed: "./data/processed/customers"   # Local archive after S3 upload
+  rejected: "./data/rejected/customers"     # Local rejected after S3 upload
