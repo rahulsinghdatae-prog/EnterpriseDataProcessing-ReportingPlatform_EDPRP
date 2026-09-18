@@ -7,6 +7,8 @@
 #   1. Upload the raw customers file from local disk to S3.
 #   2. Copy the file from the S3 stage into the Snowflake
 #      BRONZE.CUSTOMERS table.
+#   3. Promote the validated/cleansed records from the BRONZE
+#      schema into the SILVER schema (bronze_to_silver).
 # It exits with a non-zero code if any step fails, so the
 # pipeline can be wired into a scheduler (cron, Airflow, etc.).
 # ============================================================
@@ -21,6 +23,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from scripts.logging_config import setup_logging
 from scripts.upload_to_s3 import upload_file_to_s3
 from scripts.load_customers_from_s3_to_snowflake import load_customers
+from scripts.bronze_to_silver import bronze_to_silver
 
 logger, run_log_file = setup_logging()
 
@@ -37,6 +40,14 @@ def main():
     if not success:
         # load_customers() returns False on error, so abort the pipeline here.
         logger.error("Customer load failed. Pipeline aborted.")
+        sys.exit(1)
+
+    # Step 3: Promote BRONZE.CUSTOMERS to SILVER.CUSTOMERS.
+    # bronze_to_silver() cleanses & validates the Bronze data and loads the
+    # valid records into Silver. It returns False on error, so we abort too.
+    success = bronze_to_silver()
+    if not success:
+        logger.error("Bronze → Silver promotion failed. Pipeline aborted.")
         sys.exit(1)
 
     logger.info("Pipeline completed successfully.")
