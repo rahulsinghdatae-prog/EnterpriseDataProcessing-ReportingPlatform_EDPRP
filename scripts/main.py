@@ -9,6 +9,8 @@
 #      BRONZE.CUSTOMERS table.
 #   3. Promote the validated/cleansed records from the BRONZE
 #      schema into the SILVER schema (bronze_to_silver).
+#   4. Promote the validated records from the SILVER schema
+#      into the GOLD schema (silver_to_gold).
 # It exits with a non-zero code if any step fails, so the
 # pipeline can be wired into a scheduler (cron, Airflow, etc.).
 # ============================================================
@@ -24,6 +26,7 @@ from scripts.logging_config import setup_logging
 from scripts.upload_to_s3 import upload_file_to_s3
 from scripts.load_customers_from_s3_to_snowflake import load_customers
 from scripts.bronze_to_silver import bronze_to_silver
+from scripts.silver_to_gold import silver_to_gold
 
 logger, run_log_file = setup_logging()
 
@@ -48,6 +51,15 @@ def main():
     success = bronze_to_silver()
     if not success:
         logger.error("Bronze → Silver promotion failed. Pipeline aborted.")
+        sys.exit(1)
+
+    # Step 4: Promote SILVER.CUSTOMERS to GOLD.DIM_CUSTOMER.
+    # silver_to_gold() re-validates the business-required columns and builds
+    # the business-ready customer dimension in Gold. It returns False on
+    # error, so we abort the pipeline here as well.
+    success = silver_to_gold()
+    if not success:
+        logger.error("Silver → Gold promotion failed. Pipeline aborted.")
         sys.exit(1)
 
     logger.info("Pipeline completed successfully.")
