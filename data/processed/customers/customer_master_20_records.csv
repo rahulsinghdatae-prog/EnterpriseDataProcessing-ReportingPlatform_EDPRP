@@ -1,0 +1,21 @@
+CUSTOMER_ID,FIRST_NAME,LAST_NAME,EMAIL,CITY,STATE,COUNTRY,SOURCE_FILE_NAME,LOAD_TIMESTAMP,BATCH_ID
+1001,Rahul,Singh,rahul.singh@gmail.com,Delhi,Delhi,India,customer_master_20_records.csv,18-09-2026 20:09,BATCH_20260918_0034
+1002,Amit,Sharma,amit.sharma@gmail.com,Noida,Uttar Pradesh,India,customer_master_20_records.csv,18-09-2026 20:09,BATCH_20260918_0034
+1003,Priya,Verma,priya.verma@gmail.com,Lucknow,Uttar Pradesh,India,customer_master_20_records.csv,18-09-2026 20:09,BATCH_20260918_0034
+1004,Neha,Gupta,neha.gupta@gmail.com,Jaipur,Rajasthan,India,customer_master_20_records.csv,18-09-2026 20:09,BATCH_20260918_0034
+1005,Arjun,Mehta,arjun.mehta@gmail.com,Mumbai,Maharashtra,India,customer_master_20_records.csv,18-09-2026 20:09,BATCH_20260918_0034
+,Vikas,Kumar,vikas.kumar@gmail.com,Delhi,Delhi,India,customer_master_20_records.csv,18-09-2026 20:09,BATCH_20260918_0034
+0,Suresh,Yadav,suresh.yadav@gmail.com,Agra,Uttar Pradesh,India,customer_master_20_records.csv,18-09-2026 20:09,BATCH_20260918_0034
+-1008,Ravi,Mishra,ravi.mishra@gmail.com,Kanpur,Uttar Pradesh,India,customer_master_20_records.csv,18-09-2026 20:09,BATCH_20260918_0034
+1009,,Joshi,anita.joshi@gmail.com,Pune,Maharashtra,India,customer_master_20_records.csv,18-09-2026 20:09,BATCH_20260918_0034
+1010,   ,Malhotra,rohit.malhotra@gmail.com,Gurgaon,Haryana,India,customer_master_20_records.csv,18-09-2026 20:09,BATCH_20260918_0034
+1011,Karan,,karan.agarwal@gmail.com,Bengaluru,Karnataka,India,customer_master_20_records.csv,18-09-2026 20:09,BATCH_20260918_0034
+1012,Pooja,   ,pooja.bansal@gmail.com,Chandigarh,Chandigarh,India,customer_master_20_records.csv,18-09-2026 20:09,BATCH_20260918_0034
+1013,Manish,Tiwari,,Patna,Bihar,India,customer_master_20_records.csv,18-09-2026 20:09,BATCH_20260918_0034
+1014,Ankit,Rana,ankit.rana.gmail.com,Dehradun,Uttarakhand,India,customer_master_20_records.csv,18-09-2026 20:09,BATCH_20260918_0034
+1005,Arjun,Mehta,arjun.mehta.duplicate@gmail.com,Mumbai,Maharashtra,India,customer_master_20_records.csv,18-09-2026 20:09,BATCH_20260918_0034
+1016,Deepak,Saxena,deepak.saxena@gmail.com,Meerut,Uttar Pradesh,India,,18-09-2026 20:09,BATCH_20260918_0034
+1017,Nitin,Chauhan,nitin.chauhan@gmail.com,Shimla,Himachal Pradesh,India,customer_master_20_records.csv,18-09-2026 20:09,
+1018,Sanjay,Kapoor,sanjay.kapoor@gmail.com,Kolkata,West Bengal,India,customer_master_20_records.csv,18-99-2026 25:70:00,BATCH_20260918_0034
+,   ,,invalid.email,  delhi  ,  delhi  ,  india  ,,INVALID_TIMESTAMP,
+-1020,,   ,,  noida  ,uttar pradesh,INDIA, ,not-a-timestamp, 
